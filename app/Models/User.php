@@ -11,6 +11,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Builder;
+use App\Models\Scopes\ActiveUserScope;
 
 class User extends Authenticatable
 {
@@ -20,10 +22,13 @@ class User extends Authenticatable
      * Các thuộc tính có thể gán hàng loạt.
      */
     protected $fillable = [
+        'firstname',
+        'lastname',
         'name',
         'username',
         'email',
         'password',
+        'is_active',
     ];
 
     /**
@@ -40,8 +45,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'is_active' => 'boolean',
         ];
     }
 
@@ -69,5 +75,19 @@ class User extends Authenticatable
         return Attribute::make(
             set: fn ($value) => Hash::make($value),
         );
+    }
+
+    //Local scope to filter admin users
+    public function scopeAdmins(Builder $query): Builder
+    {
+        return $query->whereHas('roles', function (Builder $query) {
+            $query->where('name', 'admin');
+        });
+    }
+
+    // Global scope to filter active users
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new ActiveUserScope);
     }
 }
