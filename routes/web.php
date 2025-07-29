@@ -6,9 +6,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
 use App\Models\Task;
 
-
-Auth::loginUsingId(1);
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -36,4 +33,3 @@ Route::middleware('admin')->group(function () {
 });
 
 Route::resource('tasks', TaskController::class);
-
