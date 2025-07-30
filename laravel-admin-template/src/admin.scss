@@ -1,0 +1,93 @@
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+// Custom variables
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$warning-color: #ffc107;
+$info-color: #17a2b8;
+
+// Custom admin styles
+.admin-sidebar {
+    background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
+    min-height: 100vh;
+    padding: 1rem;
+    
+    .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+        transition: all 0.3s ease;
+        
+        &:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        &.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+
+.admin-header {
+    background-color: white;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem;
+    
+    .navbar-brand {
+        font-weight: bold;
+        color: $primary-color;
+    }
+}
+
+.admin-content {
+    padding: 2rem;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 70px);
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: box-shadow 0.3s ease;
+    
+    &:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+}
+
+.btn {
+    border-radius: 0.375rem;
+    font-weight: 500;
+    
+    &.btn-primary {
+        background-color: $primary-color;
+        border-color: $primary-color;
+        
+        &:hover {
+            background-color: darken($primary-color, 10%);
+            border-color: darken($primary-color, 10%);
+        }
+    }
+}
+
+// Responsive utilities
+@media (max-width: 768px) {
+    .admin-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        
+        &.show {
+            left: 0;
+        }
+    }
+    
+    .admin-content {
+        margin-left: 0;
+    }
+} 

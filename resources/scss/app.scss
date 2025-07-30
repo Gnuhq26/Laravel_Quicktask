@@ -1,0 +1,61 @@
+// Import variables first
+@import "variables";
+
+// Import admin template styles
+@import "../../laravel-admin-template/src/admin.scss";
+
+// Custom Laravel app styles
+.app-container {
+    min-height: 100vh;
+    display: flex;
+}
+
+// Additional custom styles for Laravel app
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+// Form styles
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+// Table styles
+.table th {
+    background-color: #f8f9fa;
+    border-top: none;
+    font-weight: 600;
+}
+
+// Card styles for dashboard
+.dashboard-card {
+    transition: transform 0.2s ease;
+    
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+// Status badges
+.badge {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+}
+
+// Custom utilities
+.text-muted {
+    color: #6c757d !important;
+}
+
+.bg-light {
+    background-color: #f8f9fa !important;
+} 
