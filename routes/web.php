@@ -31,6 +31,9 @@ Route::middleware('admin')->group(function () {
     Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    // Detach role from user
+    Route::delete('users/{user}/roles/{role}', [UserController::class, 'detachRole'])
+        ->name('users.roles.detach');
 });
 
 Route::resource('tasks', TaskController::class);

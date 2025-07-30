@@ -72,6 +72,7 @@
     "Create API Token": "Create API Token",
     "Create New Team": "Create New Team",
     "Create Team": "Create Team",
+    "Create new user": "Create new user",
     "Created": "Created",
     "Created.": "Created.",
     "Current Password": "Current Password",
@@ -377,5 +378,10 @@
     "You may not delete your personal team.": "You may not delete your personal team.",
     "You may not leave a team that you created.": "You may not leave a team that you created.",
     "You're logged in!": "You're logged in!",
-    "Your email address is unverified.": "Your email address is unverified."
+    "Your email address is unverified.": "Your email address is unverified.",
+    "User List": "User List",
+    "User Info": "User Info",
+    "User Detail": "User Detail",
+    "Edit User": "Edit User",
+    "Add Task": "Add Task"
 }
