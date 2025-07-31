@@ -48,16 +48,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($user->tasks as $index => $task)
+                                    @forelse ($tasks as $index => $task)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $task->name }}</td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <a href="{{ route('tasks.edit', $task) }}">
+                                                    <a href="{{ route('tasks.edit', ['task' => $task->id]) }}">
                                                         <x-primary-button>{{ __('Edit') }}</x-primary-button>
                                                     </a>
-                                                    <form action="{{ route('tasks.destroy', $task) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}')">
+                                                    <form action="{{ route('tasks.destroy', ['task' => $task->id]) }}" method="POST" onsubmit="return confirm('{{ __('Are you sure?') }}')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <x-primary-button class="bg-red-500 hover:bg-red-700">{{ __('Delete') }}</x-primary-button>
