@@ -25,6 +25,7 @@
                         <th class="text-gray-900 dark:text-gray-100" scope="col">#</th>
                         <th class="text-gray-900 dark:text-gray-100" scope="col">Name</th>
                         <th class="text-gray-900 dark:text-gray-100" scope="col">Username</th>
+                        <th class="text-gray-900 dark:text-gray-100" scope="col">Task</th>
                         <th class="text-gray-900 dark:text-gray-100" scope="col">Action</th>
                     </tr>
                 </thead>
@@ -35,18 +36,25 @@
                             <td class="text-gray-900 dark:text-gray-100">{{ $user->name }}</td>
                             <td class="text-gray-900 dark:text-gray-100">{{ $user->username }}</td>
                             <td class="text-gray-900 dark:text-gray-100">
+                                @if($user->tasks->isNotEmpty())
+                                    {{ $user->tasks->first()->name }}
+                                @else
+                                    No task
+                                @endif
+                            </td>
+                            <td class="text-gray-900 dark:text-gray-100">
                                 <div class="action-buttons">
-                                    <a href="{{ route('users.show', $user) }}">
+                                    <a href="{{ route('users.show', ['user' => $user->id]) }}">
                                         <x-primary-button class="mt-4 bg-blue-500 hover:bg-blue-700">
                                             {{ __('View') }}
                                         </x-primary-button>
                                     </a>
-                                    <a href="{{ route('users.edit', $user) }}">
+                                    <a href="{{ route('users.edit', ['user' => $user->id]) }}">
                                         <x-primary-button class="mt-4 bg-green-500 hover:bg-green-700">
                                             {{ __('Edit') }}
                                         </x-primary-button>
                                     </a>
-                                    <form action="{{ route('users.destroy', $user) }}" method="POST" style="display:inline" onsubmit="return confirm('Bạn có chắc muốn xóa user này?')">
+                                    <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST" style="display:inline" onsubmit="return confirm('Bạn có chắc muốn xóa user này?')">
                                         @csrf
                                         @method('DELETE')
                                         <x-primary-button class="mt-4 bg-red-500 hover:bg-red-700">

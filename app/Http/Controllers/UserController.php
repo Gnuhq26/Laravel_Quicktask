@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\DB;
+
 
 
 class UserController extends Controller
@@ -17,8 +19,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        $users = User::with('tasks')->get();
         return view('users.index', [
-            'users' => User::all(),
+            'users' => $users,
         ]);
     }
 
@@ -38,7 +41,7 @@ class UserController extends Controller
         $validated = $request->validated();
         $validated['name'] = Str::slug($validated['firstname'] . ' ' . $validated['lastname']);
 
-        $user = User::create($validated);
+        $userId = DB::table('users')->insertGetId($validated);
         return redirect()->route('users.index')->with('success', 'User created!'); 
     }
 
@@ -47,7 +50,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $user = DB::table('users')->where('id', $user->id)->first();
+        $tasks = DB::table('tasks')->where('user_id', $user->id)->get();
+        return view('users.show', compact('user', 'tasks'));
     }
 
     /**
@@ -55,6 +60,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $user = DB::table('users')->where('id', $user->id)->first();
         return view('users.edit', compact('user'));
     }
 
@@ -64,10 +70,10 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $validated = $request->validated();
-
         $validated['name'] = Str::slug($validated['firstname'] . ' ' . $validated['lastname']);
 
-        $user->update($validated);
+        DB::table('users')->where(' id', $user->id)->update($validated);
+        // $user->update($validated);
 
         return redirect()->route('users.index')->with('success', 'User updated!');
     }
@@ -77,7 +83,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        // $user->delete();
+        DB::table('users')->where('id', $user->id)->delete();
         return redirect()->route('users.index')->with('success', 'User deleted!');
     }
 
@@ -86,7 +93,8 @@ class UserController extends Controller
      */
     public function detachRole(User $user, $roleId)
     {
-        $user->roles()->detach($roleId);
-        return redirect()->route('users.show', $user)->with('success', 'Role detached!');
+        // $user->roles()->detach($roleId);
+        DB::table('role_user')->where('user_id', $user->id)->where('role_id', $roleId)->delete();
+        return redirect()->route('users.show', $user->id)->with('success', 'Role detached!');
     }
 }
