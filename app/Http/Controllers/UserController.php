@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+
 
 class UserController extends Controller
 {
@@ -13,7 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return view('users.index', [
+            'users' => User::all(),
+        ]);
     }
 
     /**
@@ -27,21 +33,13 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
-            'is_active' => 'boolean',
-        ]);
+        $validated = $request->validated();
+        $validated['name'] = Str::slug($validated['firstname'] . ' ' . $validated['lastname']);
 
         $user = User::create($validated);
-
-        return redirect()->route('users.show', $user)->with('success', 'User created!');
+        return redirect()->route('users.index')->with('success', 'User created!'); 
     }
 
     /**
@@ -63,28 +61,15 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $validated = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:6',
-            'is_active' => 'boolean',
-        ]);
-        $validated['password'] = Hash::make($validated['password']);
+        $validated = $request->validated();
 
-        if (!empty($validated['password'])) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']);
-        }
+        $validated['name'] = Str::slug($validated['firstname'] . ' ' . $validated['lastname']);
 
         $user->update($validated);
 
-        return redirect()->route('users.show', $user)->with('success', 'User updated!');
+        return redirect()->route('users.index')->with('success', 'User updated!');
     }
 
     /**
@@ -94,5 +79,14 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted!');
+    }
+
+    /**
+     * Detach role from user.
+     */
+    public function detachRole(User $user, $roleId)
+    {
+        $user->roles()->detach($roleId);
+        return redirect()->route('users.show', $user)->with('success', 'Role detached!');
     }
 }

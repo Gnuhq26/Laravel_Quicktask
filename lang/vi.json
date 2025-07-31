@@ -74,6 +74,7 @@
     "Create Team": "Tạo nhóm",
     "Created": "Đã Tạo",
     "Created.": "Đã thêm.",
+    "Create new user": "Tạo người dùng mới",
     "Current Password": "Mật khẩu hiện tại",
     "Dashboard": "Bảng điều khiển",
     "Delete": "Xóa",
@@ -377,5 +378,10 @@
     "You may not delete your personal team.": "Bạn không thể xóa nhóm cá nhân của mình.",
     "You may not leave a team that you created.": "Bạn không được rời khỏi nhóm mà bạn đã tạo.",
     "You're logged in!": "Bạn đã đăng nhập!",
-    "Your email address is unverified.": "Địa chỉ email của bạn chưa được xác minh."
+    "Your email address is unverified.": "Địa chỉ email của bạn chưa được xác minh.",
+    "User List": "Danh sách người dùng",
+    "User Info": "Thông tin người dùng",
+    "User Detail": "Chi tiết người dùng",
+    "Edit User": "Chỉnh sửa người dùng",
+    "Add Task": "Thêm công việc"
 }

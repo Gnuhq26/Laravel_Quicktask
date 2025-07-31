@@ -1,3 +1,56 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom table styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    text-align: center;
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+}
+
+.table td {
+    color: #111827;
+}
+
+/* Dark mode support */
+.dark .table th {
+    background-color: #374151;
+    color: #d1d5db;
+}
+
+.dark .table td {
+    color: #f9fafb;
+}
+
+.dark .table td,
+.dark .table th {
+    border-bottom-color: #4b5563;
+}
+
+/* Fix action column width */
+.table th:last-child,
+.table td:last-child {
+    width: auto;
+    min-width: 120px;
+}
+
+/* Action buttons container */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
